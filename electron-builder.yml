@@ -1,0 +1,63 @@
+appId: com.cipher.app
+productName: Cipher
+
+directories:
+  buildResources: build
+
+fileAssociations:
+  - ext: "cipher"
+    name: "CipherFile"
+    description: "Archivo Protegido por Cipher"
+    icon: "build/icon.png" 
+    role: "Editor"
+
+files:
+  - '!**/.vscode/*'
+  - '!src/*'
+  - '!electron.vite.config.{js,ts,mjs,cjs}'
+  - '!{.eslintcache,eslint.config.mjs,.prettierignore,.prettierrc.yaml,dev-app-update.yml,CHANGELOG.md,README.md}'
+  - '!{.env,.env.*,.npmrc,pnpm-lock.yaml}'
+  - '!{tsconfig.json,tsconfig.node.json,tsconfig.web.json}'
+
+asarUnpack:
+  - resources/**
+
+win:
+  executableName: Cipher
+  target:
+    - target: nsis
+      arch:
+        - x64
+  icon: build/icon.png
+
+nsis:
+  artifactName: ${name}-${version}-setup.${ext}
+  shortcutName: ${productName}
+  uninstallDisplayName: ${productName}
+  createDesktopShortcut: true
+  oneClick: false
+  allowToChangeInstallationDirectory: true
+
+mac:
+  target: dmg
+  icon: build/icon.png
+  category: public.app-category.utilities
+
+dmg:
+  artifactName: ${name}-${version}.${ext}
+
+linux:
+  target:
+    - AppImage
+    - deb
+  maintainer: electronjs.org
+  category: Utility
+  icon: build/icon.png
+
+appImage:
+  artifactName: ${name}-${version}.${ext}
+
+npmRebuild: false
+publish:
+  provider: generic
+  url: https://example.com/auto-updates
